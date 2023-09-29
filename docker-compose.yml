@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:1.25
+    restart: unless-stopped
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./:/usr/share/app
+      - ./deployment/nginx/default.nginx:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  app:
+    build:
+      context: .
+    working_dir: /usr/share/app
+    restart: unless-stopped
+    volumes:
+      - ./:/usr/share/app
+    environment:
+      PHP_IDE_CONFIG: "serverName=localhost"
+
+  db:
+    image: mysql:8.0.33
+    restart: unless-stopped
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+
+volumes:
+  mysql_data:
+    driver: local
