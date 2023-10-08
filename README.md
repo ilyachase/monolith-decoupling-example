@@ -5,4 +5,6 @@ The main use case of this repository is to see code examples as you read through
 docker-compose up -d
 make vendor
 make db
+make migration
+make fixture
 ```

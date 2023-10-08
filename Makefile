@@ -60,3 +60,6 @@ db: sf
 
 migration: c=doctrine:migration:migrate --no-interaction
 migration: sf
+
+fixture: c=doctrine:fixtures:load -n
+fixture: sf
