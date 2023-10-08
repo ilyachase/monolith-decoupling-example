@@ -11,7 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: '`order`')]
 class Order
 {
+    public const STATUS_NEW = 'new';
     public const STATUS_ACCEPTED = 'accepted';
+    public const STATUS_DECLINED = 'declined';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

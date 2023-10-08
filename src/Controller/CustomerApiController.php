@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Dto\CreateOrderRequest;
-use App\Exception\OrderCannotBeCreatedException;
+use App\Exception\RestaurantNotFoundException;
 use App\Service\CustomerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,8 +23,8 @@ class CustomerApiController extends AbstractController
     ): JsonResponse {
         try {
             $newOrderId = $customerService->createOrder($createOrderRequest);
-        } catch (OrderCannotBeCreatedException) {
-            return new JsonResponse(['message' => 'Order cannot be created'], Response::HTTP_BAD_REQUEST);
+        } catch (RestaurantNotFoundException) {
+            return new JsonResponse(['message' => 'Restaurant not found'], Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse(['id' => $newOrderId]);
