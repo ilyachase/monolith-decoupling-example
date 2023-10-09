@@ -30,7 +30,8 @@ readonly class CustomerService
 
         if ($this->restaurantService->acceptOrder($newOrder)) {
             $newOrder->setStatus(Order::STATUS_ACCEPTED);
-            // todo: $this->deliveryService->createDelivery();
+            $newDelivery = $this->deliveryService->createDelivery($newOrder);
+            $newOrder->setDelivery($newDelivery);
         } else {
             $newOrder->setStatus(Order::STATUS_DECLINED);
         }

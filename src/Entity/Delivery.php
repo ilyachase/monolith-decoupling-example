@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: DeliveryRepository::class)]
 class Delivery
 {
+    public const STATUS_NEW = 'new';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
