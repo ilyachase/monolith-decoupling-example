@@ -6,18 +6,25 @@ namespace App\Entity;
 
 use App\Repository\DeliveryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: DeliveryRepository::class)]
 class Delivery
 {
     public const STATUS_NEW = 'new';
+    public const STATUS_COURIER_ASSIGNED = 'courier_assigned';
+    public const STATUS_DELIVERING = 'delivering';
+    public const STATUS_FAILED = 'failed';
+    public const STATUS_SUCCESSFUL = 'successful';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['api'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['api'])]
     private ?string $status = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

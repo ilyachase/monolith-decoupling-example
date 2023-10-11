@@ -6,14 +6,14 @@ namespace App\Service;
 
 use App\Dto\CreateOrderRequest;
 use App\Entity\Order;
-use App\Exception\RestaurantNotFoundException;
+use App\Exception\EntityNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class CustomerService
 {
     public function __construct(
         private RestaurantService $restaurantService,
-        private DeliveryService $deliveryService,
+        private CourierService $deliveryService,
         private EntityManagerInterface $entityManager
     ) {
     }
@@ -21,7 +21,7 @@ readonly class CustomerService
     public function createOrder(CreateOrderRequest $createOrderRequest): int
     {
         if (!($restaurant = $this->restaurantService->getRestaurant($createOrderRequest->getRestaurantId()))) {
-            throw new RestaurantNotFoundException();
+            throw new EntityNotFoundException();
         }
 
         $newOrder = (new Order())
@@ -40,5 +40,22 @@ readonly class CustomerService
         $this->entityManager->flush();
 
         return $newOrder->getId();
+    }
+
+    public function changeOrderStatus(?int $orderId, string $orderStatus): void
+    {
+        if (!$orderId) {
+            throw new EntityNotFoundException();
+        }
+
+        $order = $this->entityManager->find(Order::class, $orderId);
+        if (!$order) {
+            throw new EntityNotFoundException();
+        }
+
+        $order->setStatus($orderStatus);
+
+        $this->entityManager->persist($order);
+        $this->entityManager->flush();
     }
 }

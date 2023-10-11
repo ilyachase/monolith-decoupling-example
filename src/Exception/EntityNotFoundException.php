@@ -6,6 +6,6 @@ namespace App\Exception;
 
 use LogicException;
 
-class RestaurantNotFoundException extends LogicException
+class EntityNotFoundException extends LogicException
 {
 }
