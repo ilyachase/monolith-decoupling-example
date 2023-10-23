@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Courier\Service;
 
-use App\Entity\Delivery;
-use App\Entity\Order;
-use App\Exception\EntityNotFoundException;
-use App\Repository\DeliveryRepository;
+use App\Courier\Entity\Delivery;
+use App\Customer\Entity\Order;
+use App\Common\Exception\EntityNotFoundException;
+use App\Courier\Repository\DeliveryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class CourierService

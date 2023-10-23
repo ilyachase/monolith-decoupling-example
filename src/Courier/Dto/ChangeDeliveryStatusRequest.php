@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Dto;
+namespace App\Courier\Dto;
 
-use App\Entity\Delivery;
+use App\Courier\Entity\Delivery;
 use Symfony\Component\Validator\Constraints as Assert;
 
 readonly class ChangeDeliveryStatusRequest

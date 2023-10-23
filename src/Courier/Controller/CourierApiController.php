@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Courier\Controller;
 
-use App\Dto\ChangeDeliveryStatusRequest;
-use App\Entity\Delivery;
-use App\Entity\Order;
-use App\Exception\EntityNotFoundException;
-use App\Service\CourierService;
-use App\Service\CustomerService;
+use App\Courier\Dto\ChangeDeliveryStatusRequest;
+use App\Courier\Entity\Delivery;
+use App\Customer\Entity\Order;
+use App\Common\Exception\EntityNotFoundException;
+use App\Courier\Service\CourierService;
+use App\Customer\Service\CustomerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

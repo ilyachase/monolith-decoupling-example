@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Customer\Controller;
 
-use App\Dto\CreateOrderRequest;
-use App\Exception\EntityNotFoundException;
-use App\Service\CustomerService;
+use App\Customer\Dto\CreateOrderRequest;
+use App\Common\Exception\EntityNotFoundException;
+use App\Customer\Service\CustomerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

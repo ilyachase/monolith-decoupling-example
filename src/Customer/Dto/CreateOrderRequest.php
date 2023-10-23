@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Dto;
+namespace App\Customer\Dto;
 
 use Symfony\Component\Validator\Constraints as Assert;
 

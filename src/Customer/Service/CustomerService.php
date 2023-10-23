@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Customer\Service;
 
-use App\Dto\CreateOrderRequest;
-use App\Entity\Order;
-use App\Exception\EntityNotFoundException;
+use App\Courier\Service\CourierService;
+use App\Customer\Dto\CreateOrderRequest;
+use App\Customer\Entity\Order;
+use App\Common\Exception\EntityNotFoundException;
+use App\Restaurant\Service\RestaurantService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class CustomerService

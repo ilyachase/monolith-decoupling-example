@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Restaurant\Service;
 
-use App\Entity\Order;
-use App\Entity\Restaurant;
-use App\Repository\RestaurantRepository;
+use App\Customer\Entity\Order;
+use App\Restaurant\Entity\Restaurant;
+use App\Restaurant\Repository\RestaurantRepository;
 
 readonly class RestaurantService
 {

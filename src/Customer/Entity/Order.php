@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Customer\Entity;
 
-use App\Repository\OrderRepository;
+use App\Courier\Entity\Delivery;
+use App\Restaurant\Entity\Restaurant;
+use App\Customer\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]

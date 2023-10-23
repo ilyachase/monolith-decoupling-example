@@ -1,12 +1,12 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\Restaurant\DataFixtures;
 
-use App\Entity\Restaurant;
+use App\Restaurant\Entity\Restaurant;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class AppFixtures extends Fixture
+class RestaurantFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {

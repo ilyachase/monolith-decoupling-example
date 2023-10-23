@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Courier\Entity;
 
-use App\Repository\DeliveryRepository;
+use App\Customer\Entity\Order;
+use App\Courier\Repository\DeliveryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
