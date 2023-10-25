@@ -1,5 +1,10 @@
-controllers:
+courier_controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Courier/Controller/
+        namespace: App\Courier\Controller
+    type: attribute
+customer_controllers:
+    resource:
+        path: ../src/Customer/Controller/
+        namespace: App\Customer\Controller
     type: attribute
