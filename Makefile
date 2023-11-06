@@ -64,8 +64,14 @@ db_customer: sf
 db_restaurant: c=doctrine:database:create --if-not-exists -c restaurant
 db_restaurant: sf
 
-migration: c=doctrine:migration:migrate --no-interaction
-migration: sf
+courier_migration: c=doctrine:migrations:migrate -n --em courier --configuration config/doctrine_migrations_courier.yaml
+courier_migration: sf
+
+customer_migration: c=doctrine:migrations:migrate -n --em customer --configuration config/doctrine_migrations_customer.yaml
+customer_migration: sf
+
+restaurant_migration: c=doctrine:migrations:migrate -n --em restaurant --configuration config/doctrine_migrations_restaurant.yaml
+restaurant_migration: sf
 
 fixture: c=doctrine:fixtures:load -n
 fixture: sf

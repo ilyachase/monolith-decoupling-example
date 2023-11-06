@@ -5,6 +5,6 @@ The main use case of this repository is to see code examples as you read through
 docker-compose up -d
 make vendor
 make db_courier && make db_customer && make db_restaurant
-make migration
+make courier_migration && make customer_migration && make restaurant_migration  
 make fixture
 ```
