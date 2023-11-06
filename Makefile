@@ -55,8 +55,14 @@ sf: ## List all Symfony commands or pass the parameter "c=" to run a given comma
 cc: c=c:c ## Clear the cache
 cc: sf
 
-db: c=doctrine:database:create --if-not-exists
-db: sf
+db_courier: c=doctrine:database:create --if-not-exists -c courier
+db_courier: sf
+
+db_customer: c=doctrine:database:create --if-not-exists -c customer
+db_customer: sf
+
+db_restaurant: c=doctrine:database:create --if-not-exists -c restaurant
+db_restaurant: sf
 
 migration: c=doctrine:migration:migrate --no-interaction
 migration: sf
