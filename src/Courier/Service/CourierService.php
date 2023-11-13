@@ -22,7 +22,7 @@ readonly class CourierService
     {
         $newDelivery = (new Delivery())
             ->setStatus(Delivery::STATUS_NEW)
-            ->setRelatedOrder($newOrder);
+            ->setRelatedOrderId($newOrder->getId());
 
         $this->entityManager->persist($newDelivery);
         $this->entityManager->flush();
@@ -33,7 +33,7 @@ readonly class CourierService
     public function changeDeliveryStatus(int $deliveryId, string $status): Delivery
     {
         $delivery = $this->deliveryRepository->find($deliveryId);
-        if (!$delivery || !$delivery->getRelatedOrder()?->getId()) {
+        if (!$delivery || !$delivery->getRelatedOrderId()) {
             throw new EntityNotFoundException();
         }
 

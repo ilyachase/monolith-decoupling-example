@@ -40,7 +40,7 @@ class CourierApiController extends AbstractController
             Delivery::STATUS_FAILED => Order::STATUS_FAILED,
             Delivery::STATUS_SUCCESSFUL => Order::STATUS_SUCCESSFUL,
         };
-        $customerService->changeOrderStatus($changedDelivery->getRelatedOrder()?->getId(), $newOrderStatus);
+        $customerService->changeOrderStatus($changedDelivery->getRelatedOrderId(), $newOrderStatus);
 
         $context = (new ObjectNormalizerContextBuilder())
             ->withGroups('api')

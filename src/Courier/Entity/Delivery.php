@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Courier\Entity;
 
-use App\Customer\Entity\Order;
 use App\Courier\Repository\DeliveryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: DeliveryRepository::class)]
+#[ORM\Table(name: 'delivery')]
 class Delivery
 {
     public const STATUS_NEW = 'new';
@@ -28,9 +28,9 @@ class Delivery
     #[Groups(['api'])]
     private ?string $status = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Order $RelatedOrder = null;
+    #[ORM\Column(name: 'related_order_id')]
+    #[Groups(['api'])]
+    private ?int $relatedOrderId = null;
 
     public function getId(): ?int
     {
@@ -49,14 +49,14 @@ class Delivery
         return $this;
     }
 
-    public function getRelatedOrder(): ?Order
+    public function getRelatedOrderId(): ?int
     {
-        return $this->RelatedOrder;
+        return $this->relatedOrderId;
     }
 
-    public function setRelatedOrder(Order $RelatedOrder): static
+    public function setRelatedOrderId(int $relatedOrderId): static
     {
-        $this->RelatedOrder = $RelatedOrder;
+        $this->relatedOrderId = $relatedOrderId;
 
         return $this;
     }

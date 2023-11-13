@@ -16,7 +16,7 @@ readonly class CustomerService
     public function __construct(
         private RestaurantService $restaurantService,
         private CourierService $deliveryService,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $customerEntityManager
     ) {
     }
 
@@ -27,19 +27,22 @@ readonly class CustomerService
         }
 
         $newOrder = (new Order())
-            ->setRestaurant($restaurant)
+            ->setRestaurantId($restaurant->getId())
             ->setStatus(Order::STATUS_NEW);
+
+        $this->customerEntityManager->persist($newOrder);
+        $this->customerEntityManager->flush();
 
         if ($this->restaurantService->acceptOrder($newOrder)) {
             $newOrder->setStatus(Order::STATUS_ACCEPTED);
             $newDelivery = $this->deliveryService->createDelivery($newOrder);
-            $newOrder->setDelivery($newDelivery);
+            $newOrder->setDeliveryId($newDelivery->getId());
         } else {
             $newOrder->setStatus(Order::STATUS_DECLINED);
         }
 
-        $this->entityManager->persist($newOrder);
-        $this->entityManager->flush();
+        $this->customerEntityManager->persist($newOrder);
+        $this->customerEntityManager->flush();
 
         return $newOrder->getId();
     }
@@ -50,14 +53,14 @@ readonly class CustomerService
             throw new EntityNotFoundException();
         }
 
-        $order = $this->entityManager->find(Order::class, $orderId);
+        $order = $this->customerEntityManager->find(Order::class, $orderId);
         if (!$order) {
             throw new EntityNotFoundException();
         }
 
         $order->setStatus($orderStatus);
 
-        $this->entityManager->persist($order);
-        $this->entityManager->flush();
+        $this->customerEntityManager->persist($order);
+        $this->customerEntityManager->flush();
     }
 }

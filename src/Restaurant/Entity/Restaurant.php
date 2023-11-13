@@ -8,6 +8,7 @@ use App\Restaurant\Repository\RestaurantRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RestaurantRepository::class)]
+#[ORM\Table(name: 'restaurant')]
 class Restaurant
 {
     #[ORM\Id]

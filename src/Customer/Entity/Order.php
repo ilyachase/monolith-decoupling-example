@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Customer\Entity;
 
-use App\Courier\Entity\Delivery;
 use App\Customer\Repository\OrderRepository;
-use App\Restaurant\Entity\Restaurant;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -29,12 +27,11 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orders')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Restaurant $restaurant = null;
+    #[ORM\Column(name: 'restaurant_id')]
+    private ?int $restaurantId = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Delivery $delivery = null;
+    #[ORM\Column(name: 'delivery_id')]
+    private ?int $deliveryId = null;
 
     public function getId(): ?int
     {
@@ -53,16 +50,16 @@ class Order
         return $this;
     }
 
-    public function setRestaurant(?Restaurant $restaurant): static
+    public function setRestaurantId(int $restaurantId): static
     {
-        $this->restaurant = $restaurant;
+        $this->restaurantId = $restaurantId;
 
         return $this;
     }
 
-    public function setDelivery(?Delivery $delivery): static
+    public function setDeliveryId(int $deliveryId): static
     {
-        $this->delivery = $delivery;
+        $this->deliveryId = $deliveryId;
 
         return $this;
     }
