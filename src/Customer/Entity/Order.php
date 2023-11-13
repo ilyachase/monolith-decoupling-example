@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Customer\Entity;
 
 use App\Courier\Entity\Delivery;
-use App\Restaurant\Entity\Restaurant;
 use App\Customer\Repository\OrderRepository;
+use App\Restaurant\Entity\Restaurant;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -53,21 +53,11 @@ class Order
         return $this;
     }
 
-    public function getRestaurant(): ?Restaurant
-    {
-        return $this->restaurant;
-    }
-
     public function setRestaurant(?Restaurant $restaurant): static
     {
         $this->restaurant = $restaurant;
 
         return $this;
-    }
-
-    public function getDelivery(): ?Delivery
-    {
-        return $this->delivery;
     }
 
     public function setDelivery(?Delivery $delivery): static
