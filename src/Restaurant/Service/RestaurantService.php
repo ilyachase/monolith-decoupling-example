@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Restaurant\Service;
 
-use App\Customer\Entity\Order;
+use App\Common\Dto\Order;
 use App\Restaurant\Entity\Restaurant;
 use App\Restaurant\Repository\RestaurantRepository;
 

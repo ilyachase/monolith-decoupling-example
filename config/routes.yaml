@@ -8,3 +8,8 @@ customer_controllers:
         path: ../src/Customer/Controller/
         namespace: App\Customer\Controller
     type: attribute
+restaurant_controllers:
+    resource:
+        path: ../src/Restaurant/Controller/
+        namespace: App\Restaurant\Controller
+    type: attribute

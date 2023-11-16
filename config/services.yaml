@@ -15,9 +15,13 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
-        exclude: # exclude migrations and rest
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
+        exclude:
+            - '../src/Courier/Entity/'
+            - '../src/Customer/Entity/'
+            - '../src/Restaurant/Entity/'
+            - '../src/Courier/Migrations/'
+            - '../src/Customer/Migrations/'
+            - '../src/Restaurant/Migrations/'
             - '../src/Kernel.php'
 
     error_renderer:

@@ -63,4 +63,14 @@ class Order
 
         return $this;
     }
+
+    public function getRestaurantId(): ?int
+    {
+        return $this->restaurantId;
+    }
+
+    public function getDeliveryId(): ?int
+    {
+        return $this->deliveryId;
+    }
 }
