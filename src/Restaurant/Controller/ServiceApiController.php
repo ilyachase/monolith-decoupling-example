@@ -26,7 +26,7 @@ class ServiceApiController extends AbstractController
         return $this->json($restaurant);
     }
 
-    #[Route('/service-restaurant/order/actions/accept', methods: 'POST')]
+    #[Route('/service-restaurant/orders/actions/accept', methods: 'POST')]
     public function acceptOrder(Request $request, SerializerInterface $serializer, RestaurantService $restaurantService): JsonResponse
     {
         $newOrder = $serializer->deserialize($request->getContent(), Order::class, 'json');

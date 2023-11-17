@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Courier\Service;
 
-use App\Courier\Entity\Delivery;
-use App\Customer\Entity\Order;
+use App\Common\Dto\Order;
 use App\Common\Exception\EntityNotFoundException;
+use App\Courier\Entity\Delivery;
 use App\Courier\Repository\DeliveryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 

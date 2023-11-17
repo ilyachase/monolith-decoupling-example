@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 #[Route('/api/courier', defaults: ['_format' => 'json'])]
 class CourierApiController extends AbstractController
 {
-    #[Route('/delivery', methods: 'PATCH')]
+    #[Route('/deliveries', methods: 'PATCH')]
     public function changeDeliveryStatus(
         #[MapRequestPayload] ChangeDeliveryStatusRequest $request,
         CourierService $courierService,

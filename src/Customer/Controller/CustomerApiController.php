@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api/customer', defaults: ['_format' => 'json'])]
 class CustomerApiController extends AbstractController
 {
-    #[Route('/order', methods: 'POST')]
+    #[Route('/orders', methods: 'POST')]
     public function createOrder(
         #[MapRequestPayload] CreateOrderRequest $createOrderRequest,
         CustomerService $customerService,

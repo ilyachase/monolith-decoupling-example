@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Customer\Service;
 
+use App\Common\Client\CourierServiceClient;
 use App\Common\Client\RestaurantServiceClient;
 use App\Common\Dto\Order as OrderDto;
 use App\Common\Exception\EntityNotFoundException;
-use App\Courier\Service\CourierService;
 use App\Customer\Dto\CreateOrderRequest;
 use App\Customer\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +16,7 @@ readonly class CustomerService
 {
     public function __construct(
         private RestaurantServiceClient $restaurantServiceClient,
-        private CourierService $deliveryService,
+        private CourierServiceClient $deliveryServiceClient,
         private EntityManagerInterface $customerEntityManager
     ) {
     }
@@ -38,7 +38,7 @@ readonly class CustomerService
 
         if ($this->restaurantServiceClient->acceptOrder($orderDto)) {
             $newOrder->setStatus(Order::STATUS_ACCEPTED);
-            $newDelivery = $this->deliveryService->createDelivery($newOrder);
+            $newDelivery = $this->deliveryServiceClient->createDelivery($orderDto);
             $newOrder->setDeliveryId($newDelivery->getId());
         } else {
             $newOrder->setStatus(Order::STATUS_DECLINED);

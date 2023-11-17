@@ -6,7 +6,6 @@ namespace App\Courier\Entity;
 
 use App\Courier\Repository\DeliveryRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: DeliveryRepository::class)]
 #[ORM\Table(name: 'delivery')]
@@ -21,15 +20,12 @@ class Delivery
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['api'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['api'])]
     private ?string $status = null;
 
     #[ORM\Column(name: 'related_order_id')]
-    #[Groups(['api'])]
     private ?int $relatedOrderId = null;
 
     public function getId(): ?int

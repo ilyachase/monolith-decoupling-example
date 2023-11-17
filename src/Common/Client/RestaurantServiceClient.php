@@ -28,7 +28,7 @@ class RestaurantServiceClient extends AbstractSymfonyControllerResolvingClient
     public function acceptOrder(Order $orderDto): bool
     {
         $response = $this->sendServiceRequest(
-            uri: '/service-restaurant/order/actions/accept',
+            uri: '/service-restaurant/orders/actions/accept',
             requestBody: $this->serializer->normalize($orderDto),
             method: 'POST'
         );
