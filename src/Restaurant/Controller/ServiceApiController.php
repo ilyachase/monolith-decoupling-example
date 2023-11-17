@@ -9,6 +9,7 @@ use App\Restaurant\Service\RestaurantService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -20,7 +21,7 @@ class ServiceApiController extends AbstractController
         $restaurant = $restaurantService->getRestaurant($restaurantId);
 
         if (!$restaurant) {
-            return $this->json(['message' => 'Restaurant not found'], 404);
+            return $this->json(['message' => 'Restaurant not found'], Response::HTTP_NOT_FOUND);
         }
 
         return $this->json($restaurant);

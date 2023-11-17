@@ -50,7 +50,7 @@ readonly class CustomerService
         return $newOrder->getId();
     }
 
-    public function changeOrderStatus(?int $orderId, string $orderStatus): void
+    public function changeOrderStatus(int $orderId, string $orderStatus): void
     {
         if (!$orderId) {
             throw new EntityNotFoundException();
@@ -61,6 +61,7 @@ readonly class CustomerService
             throw new EntityNotFoundException();
         }
 
+        // We do not validate anything for simplicity
         $order->setStatus($orderStatus);
 
         $this->customerEntityManager->persist($order);
