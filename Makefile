@@ -2,12 +2,20 @@
 DOCKER_COMP = docker-compose
 
 # Docker containers
-PHP_CONT = $(DOCKER_COMP) exec restaurant-service
+PHP_CONT_COURIER = $(DOCKER_COMP) exec courier-service
+PHP_CONT_CUSTOMER = $(DOCKER_COMP) exec customer-service
+PHP_CONT_RESTAURANT = $(DOCKER_COMP) exec restaurant-service
 
 # Executables
-PHP      = $(PHP_CONT) php
-COMPOSER = $(PHP_CONT) composer
-SYMFONY  = $(PHP) bin/console
+PHP_COURIER      = $(PHP_CONT_COURIER) php
+PHP_CUSTOMER      = $(PHP_CONT_CUSTOMER) php
+PHP_RESTAURANT      = $(PHP_CONT_RESTAURANT) php
+COMPOSER_COURIER = $(PHP_CONT_COURIER) composer
+COMPOSER_CUSTOMER = $(PHP_CONT_CUSTOMER) composer
+COMPOSER_RESTAURANT = $(PHP_CONT_RESTAURANT) composer
+SYMFONY_COURIER  = $(PHP_COURIER) bin/console
+SYMFONY_CUSTOMER  = $(PHP_CUSTOMER) bin/console
+SYMFONY_RESTAURANT  = $(PHP_RESTAURANT) bin/console
 
 # Misc
 .DEFAULT_GOAL = help
@@ -33,45 +41,64 @@ logs: ## Show live logs
 	@$(DOCKER_COMP) logs --tail=0 --follow
 
 sh: ## Connect to the PHP FPM container
-	@$(PHP_CONT) sh
+	@$(PHP_CONT_COURIER) sh
 
 bash: ## Connect to the PHP FPM container
-	@$(PHP_CONT) bash
+	@$(PHP_CONT_COURIER) bash
 
-## —— Composer 🧙 ——————————————————————————————————————————————————————————————
-composer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
+composer_courier: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
 	@$(eval c ?=)
-	@$(COMPOSER) $(c)
+	@$(COMPOSER_COURIER) $(c)
 
-vendor: ## Install vendors according to the current composer.lock file
-vendor: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
-vendor: composer
-
-## —— Symfony 🎵 ———————————————————————————————————————————————————————————————
-sf: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about
+composer_customer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
 	@$(eval c ?=)
-	@$(SYMFONY) $(c)
+	@$(COMPOSER_CUSTOMER) $(c)
 
-cc: c=c:c ## Clear the cache
-cc: sf
+composer_restaurant: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
+	@$(eval c ?=)
+	@$(COMPOSER_RESTAURANT) $(c)
+
+vendor_courier: ## Install vendors according to the current composer.lock file
+vendor_courier: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
+vendor_courier: composer_courier
+
+vendor_customer: ## Install vendors according to the current composer.lock file
+vendor_customer: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
+vendor_customer: composer_customer
+
+vendor_restaurant: ## Install vendors according to the current composer.lock file
+vendor_restaurant: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
+vendor_restaurant: composer_restaurant
+
+sf_courier: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about
+	@$(eval c ?=)
+	@$(SYMFONY_COURIER) $(c)
+
+sf_customer: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about
+	@$(eval c ?=)
+	@$(SYMFONY_CUSTOMER) $(c)
+
+sf_restaurant: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about
+	@$(eval c ?=)
+	@$(SYMFONY_RESTAURANT) $(c)
 
 db_courier: c=doctrine:database:create --if-not-exists -c courier
-db_courier: sf
+db_courier: sf_courier
 
 db_customer: c=doctrine:database:create --if-not-exists -c customer
-db_customer: sf
+db_customer: sf_customer
 
 db_restaurant: c=doctrine:database:create --if-not-exists -c restaurant
-db_restaurant: sf
+db_restaurant: sf_restaurant
 
 courier_migration: c=doctrine:migrations:migrate -n --em courier --configuration config/doctrine_migrations_courier.yaml
-courier_migration: sf
+courier_migration: sf_courier
 
 customer_migration: c=doctrine:migrations:migrate -n --em customer --configuration config/doctrine_migrations_customer.yaml
-customer_migration: sf
+customer_migration: sf_customer
 
 restaurant_migration: c=doctrine:migrations:migrate -n --em restaurant --configuration config/doctrine_migrations_restaurant.yaml
-restaurant_migration: sf
+restaurant_migration: sf_restaurant
 
 fixture: c=doctrine:fixtures:load -n
-fixture: sf
+fixture: sf_restaurant

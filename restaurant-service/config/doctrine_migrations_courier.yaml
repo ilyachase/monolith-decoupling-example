@@ -1,2 +1,0 @@
-migrations_paths:
-  'CourierMigrations': 'src/Courier/Migrations'
