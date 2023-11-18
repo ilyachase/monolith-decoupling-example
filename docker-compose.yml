@@ -9,17 +9,39 @@ services:
       - "80:80"
     volumes:
       - ./:/usr/share/app
-      - ./deployment/nginx/default.nginx:/etc/nginx/conf.d/default.conf
+      - ./deployment/nginx/:/etc/nginx/conf.d/
     depends_on:
-      - app
+      - courier-service
+      - customer-service
+      - restaurant-service
 
-  app:
+  courier-service:
     build:
       context: .
     working_dir: /usr/share/app
     restart: unless-stopped
     volumes:
-      - ./:/usr/share/app
+      - ./courier-service/:/usr/share/app
+    environment:
+      PHP_IDE_CONFIG: "serverName=localhost"
+
+  customer-service:
+    build:
+      context: .
+    working_dir: /usr/share/app
+    restart: unless-stopped
+    volumes:
+      - ./customer-service/:/usr/share/app
+    environment:
+      PHP_IDE_CONFIG: "serverName=localhost"
+
+  restaurant-service:
+    build:
+      context: .
+    working_dir: /usr/share/app
+    restart: unless-stopped
+    volumes:
+      - ./restaurant-service/:/usr/share/app
     environment:
       PHP_IDE_CONFIG: "serverName=localhost"
 

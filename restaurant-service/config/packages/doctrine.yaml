@@ -1,0 +1,67 @@
+doctrine:
+    dbal:
+        connections:
+            courier:
+                url: '%env(resolve:COURIER_DATABASE_URL)%'
+            customer:
+                url: '%env(resolve:CUSTOMER_DATABASE_URL)%'
+            restaurant:
+                url: '%env(resolve:RESTAURANT_DATABASE_URL)%'
+    orm:
+        entity_managers:
+            courier:
+                report_fields_where_declared: true
+                validate_xml_mapping: true
+                connection: courier
+                mappings:
+                    App\Courier:
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Courier/Entity'
+                        prefix: 'App\Courier\Entity'
+                        alias: App\Courier
+            customer:
+                report_fields_where_declared: true
+                validate_xml_mapping: true
+                connection: customer
+                mappings:
+                    App\Customer:
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Customer/Entity'
+                        prefix: 'App\Customer\Entity'
+                        alias: App\Customer
+            restaurant:
+                report_fields_where_declared: true
+                validate_xml_mapping: true
+                connection: restaurant
+                mappings:
+                    App\Restaurant:
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Restaurant/Entity'
+                        prefix: 'App\Restaurant\Entity'
+                        alias: App\Restaurant
+
+when@test:
+    doctrine:
+        dbal:
+            # "TEST_TOKEN" is typically set by ParaTest
+            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+
+when@prod:
+    doctrine:
+        orm:
+            auto_generate_proxy_classes: false
+            proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
+
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system

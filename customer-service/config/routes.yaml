@@ -1,0 +1,15 @@
+courier_controllers:
+    resource:
+        path: ../src/Courier/Controller/
+        namespace: App\Courier\Controller
+    type: attribute
+customer_controllers:
+    resource:
+        path: ../src/Customer/Controller/
+        namespace: App\Customer\Controller
+    type: attribute
+restaurant_controllers:
+    resource:
+        path: ../src/Restaurant/Controller/
+        namespace: App\Restaurant\Controller
+    type: attribute

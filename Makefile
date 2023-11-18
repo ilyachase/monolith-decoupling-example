@@ -2,7 +2,7 @@
 DOCKER_COMP = docker-compose
 
 # Docker containers
-PHP_CONT = $(DOCKER_COMP) exec app
+PHP_CONT = $(DOCKER_COMP) exec restaurant-service
 
 # Executables
 PHP      = $(PHP_CONT) php
