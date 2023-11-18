@@ -9,26 +9,6 @@ doctrine:
                 url: '%env(resolve:RESTAURANT_DATABASE_URL)%'
     orm:
         entity_managers:
-            courier:
-                report_fields_where_declared: true
-                validate_xml_mapping: true
-                connection: courier
-                mappings:
-                    App\Courier:
-                        is_bundle: false
-                        dir: '%kernel.project_dir%/src/Courier/Entity'
-                        prefix: 'App\Courier\Entity'
-                        alias: App\Courier
-            customer:
-                report_fields_where_declared: true
-                validate_xml_mapping: true
-                connection: customer
-                mappings:
-                    App\Customer:
-                        is_bundle: false
-                        dir: '%kernel.project_dir%/src/Customer/Entity'
-                        prefix: 'App\Customer\Entity'
-                        alias: App\Customer
             restaurant:
                 report_fields_where_declared: true
                 validate_xml_mapping: true
