@@ -38,7 +38,7 @@ down: ## Stop the docker hub
 	@$(DOCKER_COMP) down --remove-orphans
 
 logs: ## Show live logs
-	@$(DOCKER_COMP) logs --tail=0 --follow
+	@$(DOCKER_COMP) logs --tail=50 --follow
 
 sh: ## Connect to the PHP FPM container
 	@$(PHP_CONT_COURIER) sh
