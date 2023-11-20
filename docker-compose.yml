@@ -9,7 +9,7 @@ services:
       - "80:80"
     volumes:
       - ./:/usr/share/app
-      - ./deployment/nginx/:/etc/nginx/conf.d/
+      - ./deployment/nginx/default.nginx:/etc/nginx/conf.d/default.conf
     depends_on:
       - courier-service
       - customer-service

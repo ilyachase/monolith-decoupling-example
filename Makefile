@@ -59,15 +59,15 @@ composer_restaurant: ## Run composer, pass the parameter "c=" to run a given com
 	@$(COMPOSER_RESTAURANT) $(c)
 
 vendor_courier: ## Install vendors according to the current composer.lock file
-vendor_courier: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
+vendor_courier: c=install --prefer-dist --no-progress --no-scripts --no-interaction
 vendor_courier: composer_courier
 
 vendor_customer: ## Install vendors according to the current composer.lock file
-vendor_customer: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
+vendor_customer: c=install --prefer-dist --no-progress --no-scripts --no-interaction
 vendor_customer: composer_customer
 
 vendor_restaurant: ## Install vendors according to the current composer.lock file
-vendor_restaurant: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
+vendor_restaurant: c=install --prefer-dist --no-progress --no-scripts --no-interaction
 vendor_restaurant: composer_restaurant
 
 sf_courier: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about
