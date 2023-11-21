@@ -8,7 +8,7 @@ use App\Common\Dto\Delivery;
 use App\Common\Dto\Order;
 use RuntimeException;
 
-class CourierServiceClient extends AbstractSymfonyControllerResolvingClient
+class CourierServiceClient extends AbstractHttpClient
 {
     public function createDelivery(Order $newOrder): Delivery
     {
@@ -23,5 +23,10 @@ class CourierServiceClient extends AbstractSymfonyControllerResolvingClient
         }
 
         return $this->serializer->deserialize($response->getContent(), Delivery::class, 'json');
+    }
+
+    protected function getServiceName(): string
+    {
+        return 'courier';
     }
 }

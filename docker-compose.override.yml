@@ -8,7 +8,7 @@ services:
   courier-service:
     image: app
     environment:
-      PHP_IDE_CONFIG: "serverName=localhost"
+      PHP_IDE_CONFIG: "serverName=courier-service"
       XDEBUG_MODE: "debug"
     extra_hosts:
       - host.docker.internal:host-gateway
@@ -16,7 +16,7 @@ services:
   customer-service:
     image: app
     environment:
-      PHP_IDE_CONFIG: "serverName=localhost"
+      PHP_IDE_CONFIG: "serverName=customer-service"
       XDEBUG_MODE: "debug"
     extra_hosts:
       - host.docker.internal:host-gateway
@@ -24,7 +24,7 @@ services:
   restaurant-service:
     image: app
     environment:
-      PHP_IDE_CONFIG: "serverName=localhost"
+      PHP_IDE_CONFIG: "serverName=restaurant-service"
       XDEBUG_MODE: "debug"
     extra_hosts:
       - host.docker.internal:host-gateway

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
+#[Route('/api/courier')]
 class ServiceApiController extends AbstractController
 {
     #[Route('/service-courier/deliveries', methods: 'POST')]

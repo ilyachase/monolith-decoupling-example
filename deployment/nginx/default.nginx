@@ -2,6 +2,7 @@ map $request_uri $upstream {
     default       invalid;
     ~^/api/customer/   customer-service;
     ~^/api/courier/   courier-service;
+    ~^/api/restaurant/   restaurant-service;
 }
 
 upstream customer-service {
@@ -10,6 +11,10 @@ upstream customer-service {
 
 upstream courier-service {
     server courier-service:9000;
+}
+
+upstream restaurant-service {
+    server restaurant-service:9000;
 }
 
 server {
@@ -25,7 +30,7 @@ server {
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
 
-        fastcgi_param SCRIPT_FILENAME /usr/share/app/public/$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME /usr/share/app/public$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT /usr/share/app/public;
 
         internal;

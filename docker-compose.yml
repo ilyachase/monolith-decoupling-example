@@ -22,8 +22,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./courier-service/:/usr/share/app
-    environment:
-      PHP_IDE_CONFIG: "serverName=localhost"
 
   customer-service:
     build:
@@ -32,8 +30,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./customer-service/:/usr/share/app
-    environment:
-      PHP_IDE_CONFIG: "serverName=localhost"
 
   restaurant-service:
     build:
@@ -42,8 +38,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./restaurant-service/:/usr/share/app
-    environment:
-      PHP_IDE_CONFIG: "serverName=localhost"
 
   db:
     image: mysql:8.0.33

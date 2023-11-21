@@ -4,24 +4,30 @@ declare(strict_types=1);
 
 namespace App\Common\EventListener;
 
-use App\Common\Client\AbstractSymfonyControllerResolvingClient;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 #[AsEventListener(event: 'kernel.request')]
-class HideInternalApiListener
+readonly class HideInternalApiListener
 {
+    public function __construct(
+        #[Autowire('%api.secret.key%')]
+        private string $apiSecretKey,
+    ) {
+    }
+
     public function onKernelRequest(RequestEvent $event): void
     {
-        $serviceApiUrlPattern = '/service-';
+        $serviceApiUrlPattern = '/api/courier/service-courier/';
         $comparisonResult = strncmp($event->getRequest()->getPathInfo(), $serviceApiUrlPattern, mb_strlen($serviceApiUrlPattern));
         if (0 !== $comparisonResult) {
             return;
         }
 
-        $secretKey = $event->getRequest()->attributes->get(AbstractSymfonyControllerResolvingClient::IS_INTERNAL_REQUEST_ATTRIBUTE_KEY);
-        if (true !== $secretKey) {
+        $apiSecret = $event->getRequest()->headers->get('X-Api-Secret');
+        if ($this->apiSecretKey !== $apiSecret) {
             throw new NotFoundHttpException();
         }
     }

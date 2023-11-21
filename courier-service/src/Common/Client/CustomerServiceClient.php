@@ -6,7 +6,7 @@ namespace App\Common\Client;
 
 use RuntimeException;
 
-class CustomerServiceClient extends AbstractSymfonyControllerResolvingClient
+class CustomerServiceClient extends AbstractHttpClient
 {
     public function changeOrderStatus(int $orderId, string $newOrderStatus): void
     {
@@ -22,5 +22,10 @@ class CustomerServiceClient extends AbstractSymfonyControllerResolvingClient
         if (200 !== $response->getStatusCode()) {
             throw new RuntimeException('Unexpected response code');
         }
+    }
+
+    protected function getServiceName(): string
+    {
+        return 'customer';
     }
 }

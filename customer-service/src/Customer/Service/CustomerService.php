@@ -21,7 +21,7 @@ readonly class CustomerService
     ) {
     }
 
-    public function createOrder(CreateOrderRequest $createOrderRequest): int
+    public function createOrder(CreateOrderRequest $createOrderRequest): Order
     {
         if (!($restaurant = $this->restaurantServiceClient->getRestaurant($createOrderRequest->getRestaurantId()))) {
             throw new EntityNotFoundException();
@@ -47,7 +47,7 @@ readonly class CustomerService
         $this->customerEntityManager->persist($newOrder);
         $this->customerEntityManager->flush();
 
-        return $newOrder->getId();
+        return $newOrder;
     }
 
     public function changeOrderStatus(int $orderId, string $orderStatus): void

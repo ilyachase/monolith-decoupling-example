@@ -8,7 +8,7 @@ use App\Common\Dto\Order;
 use App\Common\Dto\Restaurant;
 use RuntimeException;
 
-class RestaurantServiceClient extends AbstractSymfonyControllerResolvingClient
+class RestaurantServiceClient extends AbstractHttpClient
 {
     public function getRestaurant(int $restaurantId): ?Restaurant
     {
@@ -38,5 +38,10 @@ class RestaurantServiceClient extends AbstractSymfonyControllerResolvingClient
         }
 
         return $this->serializer->decode(data: $response->getContent(), format: 'json');
+    }
+
+    protected function getServiceName(): string
+    {
+        return 'restaurant';
     }
 }

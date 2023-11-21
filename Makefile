@@ -43,8 +43,14 @@ logs: ## Show live logs
 sh: ## Connect to the PHP FPM container
 	@$(PHP_CONT_COURIER) sh
 
-bash: ## Connect to the PHP FPM container
+bash_courier: ## Connect to the PHP FPM container
 	@$(PHP_CONT_COURIER) bash
+
+bash_customer: ## Connect to the PHP FPM container
+	@$(PHP_CONT_CUSTOMER) bash
+
+bash_restaurant: ## Connect to the PHP FPM container
+	@$(PHP_CONT_RESTAURANT) bash
 
 composer_courier: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
 	@$(eval c ?=)

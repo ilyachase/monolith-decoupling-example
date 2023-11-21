@@ -12,13 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/api/customer')]
 class ServiceApiController extends AbstractController
 {
     #[Route('/service-customer/orders', methods: 'POST')]
-    public function createDelivery(Request $request, CustomerService $customerService): JsonResponse
+    public function changeOrderStatus(Request $request, CustomerService $customerService): JsonResponse
     {
-        $orderId = (int) $request->get('orderId');
-        $newOrderStatus = (string) $request->get('newOrderStatus');
+        $orderId = (int) $request->getPayload()->get('orderId');
+        $newOrderStatus = (string) $request->getPayload()->get('newOrderStatus');
 
         try {
             $customerService->changeOrderStatus($orderId, $newOrderStatus);

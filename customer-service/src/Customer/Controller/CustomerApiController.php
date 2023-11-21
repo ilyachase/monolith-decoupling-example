@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Customer\Controller;
 
-use App\Customer\Dto\CreateOrderRequest;
 use App\Common\Exception\EntityNotFoundException;
+use App\Customer\Dto\CreateOrderRequest;
 use App\Customer\Service\CustomerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,11 +22,11 @@ class CustomerApiController extends AbstractController
         CustomerService $customerService,
     ): JsonResponse {
         try {
-            $newOrderId = $customerService->createOrder($createOrderRequest);
+            $newOrder = $customerService->createOrder($createOrderRequest);
         } catch (EntityNotFoundException) {
             return new JsonResponse(['message' => 'Restaurant not found'], Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse(['id' => $newOrderId]);
+        return $this->json($newOrder);
     }
 }

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
+#[Route('/api/restaurant')]
 class ServiceApiController extends AbstractController
 {
     #[Route('/service-restaurant/restaurants/{restaurantId}', methods: 'GET')]
