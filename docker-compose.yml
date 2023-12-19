@@ -47,6 +47,10 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
+  amqp-broker:
+    image: rabbitmq:3
+    restart: unless-stopped
+
 volumes:
   mysql_data:
     driver: local
