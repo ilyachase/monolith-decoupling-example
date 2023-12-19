@@ -36,6 +36,7 @@ readonly class CustomerService
 
         $orderDto = new OrderDto($newOrder->getId(), $newOrder->getStatus(), $newOrder->getRestaurantId(), $newOrder->getDeliveryId());
 
+        // todo: change to async
         if ($this->restaurantServiceClient->acceptOrder($orderDto)) {
             $newOrder->setStatus(Order::STATUS_ACCEPTED);
             $newDelivery = $this->deliveryServiceClient->createDelivery($orderDto);

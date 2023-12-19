@@ -39,6 +39,7 @@ class CourierApiController extends AbstractController
             Delivery::STATUS_FAILED => Order::STATUS_FAILED,
             Delivery::STATUS_SUCCESSFUL => Order::STATUS_SUCCESSFUL,
         };
+        // todo: change to async
         $customerServiceClient->changeOrderStatus($changedDelivery->getRelatedOrderId(), $newOrderStatus);
 
         return new JsonResponse($normalizer->normalize($changedDelivery));

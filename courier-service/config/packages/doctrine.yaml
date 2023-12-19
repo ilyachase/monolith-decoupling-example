@@ -3,10 +3,6 @@ doctrine:
         connections:
             courier:
                 url: '%env(resolve:COURIER_DATABASE_URL)%'
-            customer:
-                url: '%env(resolve:CUSTOMER_DATABASE_URL)%'
-            restaurant:
-                url: '%env(resolve:RESTAURANT_DATABASE_URL)%'
     orm:
         entity_managers:
             courier:
