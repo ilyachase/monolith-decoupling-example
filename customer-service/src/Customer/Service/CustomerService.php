@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace App\Customer\Service;
 
-use App\Common\Client\CourierServiceClient;
 use App\Common\Client\RestaurantServiceClient;
 use App\Common\Dto\Order as OrderDto;
 use App\Common\Exception\EntityNotFoundException;
+use App\Common\Message\OrderCreated;
 use App\Customer\Dto\CreateOrderRequest;
 use App\Customer\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 readonly class CustomerService
 {
     public function __construct(
         private RestaurantServiceClient $restaurantServiceClient,
-        private CourierServiceClient $deliveryServiceClient,
-        private EntityManagerInterface $customerEntityManager
+        private EntityManagerInterface $customerEntityManager,
+        private MessageBusInterface $messageBus,
     ) {
     }
 
@@ -37,16 +38,18 @@ readonly class CustomerService
         $orderDto = new OrderDto($newOrder->getId(), $newOrder->getStatus(), $newOrder->getRestaurantId(), $newOrder->getDeliveryId());
 
         // todo: change to async
-        if ($this->restaurantServiceClient->acceptOrder($orderDto)) {
-            $newOrder->setStatus(Order::STATUS_ACCEPTED);
-            $newDelivery = $this->deliveryServiceClient->createDelivery($orderDto);
-            $newOrder->setDeliveryId($newDelivery->getId());
-        } else {
-            $newOrder->setStatus(Order::STATUS_DECLINED);
-        }
+        //        if ($this->restaurantServiceClient->acceptOrder($orderDto)) {
+        //            $newOrder->setStatus(Order::STATUS_ACCEPTED);
+        //            $newDelivery = $this->deliveryServiceClient->createDelivery($orderDto);
+        //            $newOrder->setDeliveryId($newDelivery->getId());
+        //        } else {
+        //            $newOrder->setStatus(Order::STATUS_DECLINED);
+        //        }
 
         $this->customerEntityManager->persist($newOrder);
         $this->customerEntityManager->flush();
+
+        $this->messageBus->dispatch(new OrderCreated($orderDto));
 
         return $newOrder;
     }

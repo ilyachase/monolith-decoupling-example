@@ -39,6 +39,15 @@ services:
     volumes:
       - ./restaurant-service/:/usr/share/app
 
+  restaurant-consumer:
+    build:
+      context: .
+    working_dir: /usr/share/app
+    restart: unless-stopped
+    command: bin/console messenger:consume async -vv
+    volumes:
+      - ./restaurant-service/:/usr/share/app
+
   db:
     image: mysql:8.0.33
     restart: unless-stopped
