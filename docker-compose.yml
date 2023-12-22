@@ -23,11 +23,29 @@ services:
     volumes:
       - ./courier-service/:/usr/share/app
 
+  courier-consumer:
+    build:
+      context: .
+    working_dir: /usr/share/app
+    restart: unless-stopped
+    command: bin/console messenger:consume async -vv
+    volumes:
+      - ./courier-service/:/usr/share/app
+
   customer-service:
     build:
       context: .
     working_dir: /usr/share/app
     restart: unless-stopped
+    volumes:
+      - ./customer-service/:/usr/share/app
+
+  customer-consumer:
+    build:
+      context: .
+    working_dir: /usr/share/app
+    restart: unless-stopped
+    command: bin/console messenger:consume async -vv
     volumes:
       - ./customer-service/:/usr/share/app
 

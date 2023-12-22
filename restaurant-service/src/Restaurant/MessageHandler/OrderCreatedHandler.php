@@ -19,7 +19,7 @@ readonly class OrderCreatedHandler
     public function __invoke(OrderCreated $message)
     {
         // for the sake of the example, let's assume for now that the order can always be served
-        $this->messageBus->dispatch(new OrderAccepted());
+        $this->messageBus->dispatch(new OrderAccepted($message->getOrder()));
         // alternatively, we could dispatch this instead based on our business logic:
         // $this->messageBus->dispatch(new OrderDeclined());
     }
