@@ -5,7 +5,11 @@ framework:
       default_serializer: messenger.transport.symfony_serializer
 
     transports:
-      async: '%env(MESSENGER_TRANSPORT_DSN)%'
+      async:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          queues:
+            restaurant-service: ~
 
     routing:
       'App\Common\Message\OrderAccepted': async
