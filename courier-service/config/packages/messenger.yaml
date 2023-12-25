@@ -11,6 +11,9 @@ framework:
           queues:
             courier-service: ~
 
+    routing:
+      'App\Common\Message\DeliveryStatusChanged': async
+
     buses:
       default.bus:
         default_middleware:

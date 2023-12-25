@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Courier\Controller;
 
-use App\Common\Client\CustomerServiceClient;
-use App\Common\Dto\Delivery;
-use App\Common\Dto\Order;
+use App\Common\Dto\Delivery as DeliveryDto;
 use App\Common\Exception\EntityNotFoundException;
+use App\Common\Message\DeliveryStatusChanged;
 use App\Courier\Dto\ChangeDeliveryStatusRequest;
 use App\Courier\Service\CourierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -24,8 +24,8 @@ class CourierApiController extends AbstractController
     public function changeDeliveryStatus(
         #[MapRequestPayload] ChangeDeliveryStatusRequest $request,
         CourierService $courierService,
-        CustomerServiceClient $customerServiceClient,
-        NormalizerInterface $normalizer
+        NormalizerInterface $normalizer,
+        MessageBusInterface $messageBus
     ): JsonResponse {
         try {
             $changedDelivery = $courierService->changeDeliveryStatus($request->getDeliveryId(), $request->getStatus());
@@ -33,14 +33,11 @@ class CourierApiController extends AbstractController
             return new JsonResponse(['message' => 'Delivery or related order not found'], Response::HTTP_BAD_REQUEST);
         }
 
-        $newOrderStatus = match ($request->getStatus()) {
-            Delivery::STATUS_COURIER_ASSIGNED => Order::STATUS_COURIER_ASSIGNED,
-            Delivery::STATUS_DELIVERING => Order::STATUS_DELIVERING,
-            Delivery::STATUS_FAILED => Order::STATUS_FAILED,
-            Delivery::STATUS_SUCCESSFUL => Order::STATUS_SUCCESSFUL,
-        };
-        // todo: change to async
-        $customerServiceClient->changeOrderStatus($changedDelivery->getRelatedOrderId(), $newOrderStatus);
+        $messageBus->dispatch(new DeliveryStatusChanged(new DeliveryDto(
+            $changedDelivery->getId(),
+            $changedDelivery->getStatus(),
+            $changedDelivery->getRelatedOrderId()
+        )));
 
         return new JsonResponse($normalizer->normalize($changedDelivery));
     }
