@@ -1,4 +1,4 @@
-This is an example repository for my Medium article on how to actually decouple a monolith in PHP.
+This is an example repository for my [Medium article](https://medium.com/@ilyachase/practical-example-of-decoupling-a-monolithic-php-application-6ff82fefc80a) on how to actually decouple a monolith in PHP.
 
 The main use case of this repository is to see code examples as you read through the article, but if you decided to run it locally, do the following:
 ```
